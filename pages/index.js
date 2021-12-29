@@ -8,10 +8,12 @@ import Farm from '../components/Farm'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
+  const [waterLevel, setWaterLevel] = useState(1)
   const [farmRows, setFarmRows] = useState(10) // allows changes in farm rows
   const [farmCols, setFarmCols] = useState(10) // allows changes in farm columns
   const [farm, setFarm] = useState([])
   const [count, setCount] = useState(0)
+  const [isRaining, setIsRaining] = useState({ row: -1, column: -1 })
 
   const generateFarm = () => {
     let newFarm = []
@@ -29,7 +31,7 @@ export default function Home() {
     let wateredFarm = farm
     let rainCount = count
 
-    const checkWatered = (waterLevel) => {
+    const checkWatered = () => {
       // waterLevel sets minimum rain amount
       for (let row = 0; row < farmRows; row++) {
         for (let col = 0; col < farmCols; col++) {
@@ -39,7 +41,7 @@ export default function Home() {
       return true
     }
 
-    while (!checkWatered(1)) {
+    while (!checkWatered()) {
       let rainRow = Math.floor(Math.random() * farmRows)
       let rainCol = Math.floor(Math.random() * farmCols)
 

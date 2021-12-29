@@ -1,0 +1,9 @@
+.farm {
+  display: flex;
+  flex-direction: column;
+}
+
+.farmRow {
+  display: flex;
+  flex-direction: row;
+}

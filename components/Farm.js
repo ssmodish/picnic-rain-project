@@ -1,17 +1,19 @@
 import React from 'react'
 import Plant from './Plant'
 
+import styles from '../styles/Farm.module.css'
+
 const Farm = ({ farm }) => {
   return (
-    <table>
+    <div className={styles.farm}>
       {farm.map((row, rowIndex) => (
-        <tr key={rowIndex}>
+        <div key={rowIndex} className={styles.farmRow}>
           {row.map((col, colIndex) => (
-            <Plant key={rowIndex.toString() + colIndex.toString()} amount={col} />
+            <Plant key={rowIndex.toString() + colIndex.toString()}>{col}</Plant>
           ))}
-        </tr>
+        </div>
       ))}
-    </table>
+    </div>
   )
 }
 
