@@ -1,17 +1,23 @@
 import React from 'react'
 import Plant from './Plant'
 
-const Farm = ({ farm }) => {
+import styles from '../styles/Farm.module.css'
+
+const Farm = ({ farm, waterLevel }) => {
   return (
-    <table>
+    <div className={styles.farm}>
       {farm.map((row, rowIndex) => (
-        <tr key={rowIndex}>
-          {row.map((col, colIndex) => (
-            <Plant key={rowIndex.toString() + colIndex.toString()} amount={col} />
+        <div key={rowIndex} className={styles.farmRow}>
+          {row.map((rainCollected, colIndex) => (
+            <Plant
+              key={rowIndex.toString() + colIndex.toString()}
+              waterLevel={waterLevel}
+              rainCollected={rainCollected}
+            />
           ))}
-        </tr>
+        </div>
       ))}
-    </table>
+    </div>
   )
 }
 

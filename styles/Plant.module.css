@@ -1,0 +1,22 @@
+.plant {
+  display: flex;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  color: white;
+  margin: 1px;
+  justify-content: center;
+  align-items: center;
+}
+
+.unwatered {
+  background-color: sienna;
+}
+
+.rain {
+  background-color: darkcyan;
+}
+
+.watered {
+  background-color: darkgreen;
+}
