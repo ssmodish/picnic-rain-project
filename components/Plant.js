@@ -1,8 +1,7 @@
 import React from 'react'
 
 const Plant = ({ amount }) => {
-  console.log(`I'm a plant!`)
-  return <div>{amount}</div>
+  return <td>|{amount}|</td>
 }
 
 export default Plant

@@ -7,7 +7,7 @@ const Farm = ({ farm }) => {
       {farm.map((row, rowIndex) => (
         <tr key={rowIndex}>
           {row.map((col, colIndex) => (
-            <td key={rowIndex.toString() + colIndex.toString()}>|{col}|</td>
+            <Plant key={rowIndex.toString() + colIndex.toString()} amount={col} />
           ))}
         </tr>
       ))}
