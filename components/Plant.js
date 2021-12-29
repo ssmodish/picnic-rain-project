@@ -3,9 +3,9 @@ import cn from 'classnames'
 
 import styles from '../styles/Plant.module.css'
 
-const Plant = ({ children }) => {
-  let plantClass = cn(styles.plant, styles.unwatered)
-  return <div className={plantClass}>{children}</div>
+const Plant = ({ rainCollected, waterLevel }) => {
+  let plantClass = cn(styles.plant, waterLevel <= rainCollected ? styles.watered : styles.unwatered)
+  return <div className={plantClass}>{rainCollected}</div>
 }
 
 export default Plant

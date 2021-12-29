@@ -75,7 +75,7 @@ export default function Home() {
 
         <div>Time elapsed = {count}</div>
         {/* display field */}
-        <Farm farm={farm} />
+        <Farm farm={farm} waterLevel={waterLevel} />
       </main>
     </div>
   )
