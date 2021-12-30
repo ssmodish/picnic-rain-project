@@ -1,7 +1,4 @@
 import Head from 'next/head'
-import Image from 'next/image'
-
-import { useState, useEffect } from 'react'
 
 import { useFarmState } from '../hooks/useFarmState'
 
@@ -10,27 +7,7 @@ import Farm from '../components/Farm'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
-  const [
-    waterLevel,
-    setWaterLevel,
-    farmRows,
-    setFarmRows,
-    farmCols,
-    setFarmCols,
-    farm,
-    setFarm,
-    count,
-    setCount,
-    isRaining,
-    setIsRaining,
-    generateFarm,
-    generateRain,
-  ] = useFarmState()
-
-  const resetFarm = () => {
-    generateFarm()
-    setCount(0)
-  }
+  const [waterLevel, farm, count, setFarm, resetFarm, generateRain] = useFarmState()
 
   return (
     <div className={styles.container}>

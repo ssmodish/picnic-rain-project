@@ -47,20 +47,10 @@ export function useFarmState() {
     setCount(rainCount)
   }
 
-  return [
-    waterLevel,
-    setWaterLevel,
-    farmRows,
-    setFarmRows,
-    farmCols,
-    setFarmCols,
-    farm,
-    setFarm,
-    count,
-    setCount,
-    isRaining,
-    setIsRaining,
-    generateFarm,
-    generateRain,
-  ]
+  const resetFarm = () => {
+    generateFarm()
+    setCount(0)
+  }
+
+  return [waterLevel, farm, count, setFarm, resetFarm, generateRain]
 }
