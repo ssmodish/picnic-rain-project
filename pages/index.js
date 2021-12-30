@@ -3,6 +3,8 @@ import Image from 'next/image'
 
 import { useState, useEffect } from 'react'
 
+import Button from '../components/Button'
+
 import Farm from '../components/Farm'
 
 import styles from '../styles/Home.module.css'
@@ -69,14 +71,22 @@ export default function Home() {
 
       <main>
         <h1>Rain Problem</h1>
+        <div className={styles.decoration}></div>
 
-        <button onClick={() => generateRain(farm)}>Generate Rain</button>
-        <button onClick={() => resetFarm()}>Reset Farm</button>
+        <div className={styles.buttonBar}>
+          <Button action={() => generateRain(farm)}>Generate Rain</Button>
+          <Button action={() => resetFarm()}>Reset Farm</Button>
+        </div>
 
         <div>Time elapsed = {count}</div>
         {/* display field */}
         <Farm farm={farm} waterLevel={waterLevel} />
       </main>
+
+      <footer className={styles.footer}>
+        Icons:
+        <a href='http://www.freepik.com'> Designed by rawpixel.com / Freepik</a>
+      </footer>
     </div>
   )
 }

@@ -1,22 +1,26 @@
 .plant {
   display: flex;
-  width: 25px;
-  height: 25px;
+  flex-direction: column;
+  width: 50px;
+  height: 70px;
   text-align: center;
   color: white;
-  margin: 1px;
+  margin: 2px;
   justify-content: center;
   align-items: center;
+  border-radius: 3px;
+  box-shadow: 3px;
+  padding: 1px;
 }
 
 .unwatered {
-  background-color: sienna;
+  background-color: rgba(160, 81, 45, 0.5);
+}
+
+.watered {
+  background-color: rgba(0, 100, 0, 0.5);
 }
 
 .rain {
   background-color: darkcyan;
-}
-
-.watered {
-  background-color: darkgreen;
 }

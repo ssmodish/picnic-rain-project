@@ -1,3 +1,27 @@
 .container {
-  padding: 0 2rem;
+  padding: 2rem;
+  width: 70vw;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.decoration {
+  height: 1px;
+  border-top: 1px solid black;
+}
+
+.buttonBar {
+  display: flex;
+  flex-direction: row;
+}
+
+.footer {
+  position: relative;
+  bottom: 0vh;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  background-color: rgba(160, 81, 45, 0.5);
+  color: rgba(0, 100, 0, 0.9);
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.603);
 }
