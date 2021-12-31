@@ -2,7 +2,6 @@ import Head from 'next/head'
 import Image from 'next/image'
 
 import { useState, useEffect } from 'react'
-import useForm from '../hooks/useForm'
 
 import Button from '../components/Button'
 
@@ -17,22 +16,23 @@ const initialValues = {
 }
 
 export default function Home() {
-  const [{ waterLevel, farmRows, farmCols }, handleChanges, clearForm] = useForm(initialValues)
+  const [values, setValues] = useState(initialValues)
   const [farm, setFarm] = useState([])
   const [count, setCount] = useState(0)
   const [isRaining, setIsRaining] = useState({ row: -1, column: -1 })
 
   const generateFarm = () => {
-    let newFarm = []
-    for (let i = 0; i < farmRows; i++) {
-      newFarm.push(new Array(farmCols).fill(0))
-    }
+    let newFarm = new Array(values.farmRows).fill(null).map(() =>
+      Array(values.farmCols)
+        .fill(null)
+        .map(() => 0)
+    )
     setFarm(newFarm)
   }
 
   useEffect(() => {
     generateFarm()
-  }, [waterLevel, farmRows, farmCols])
+  }, [])
 
   const generateRain = (farm) => {
     let wateredFarm = farm
@@ -40,18 +40,19 @@ export default function Home() {
 
     const checkWatered = () => {
       // waterLevel sets minimum rain amount
-      for (let row = 0; row < farmRows; row++) {
-        for (let col = 0; col < farmCols; col++) {
-          if (wateredFarm[row][col] < waterLevel) return false
+      for (let row = 0; row < values.farmRows; row++) {
+        for (let col = 0; col < values.farmCols; col++) {
+          if (wateredFarm[row][col] < values.waterLevel) return false
         }
       }
       return true
     }
 
     while (!checkWatered()) {
+      console.log(values.farmRows + ' - ' + values.farmCols)
       // generates a raindrop on a random plant
-      let rainRow = Math.floor(Math.random() * farmRows)
-      let rainCol = Math.floor(Math.random() * farmCols)
+      let rainRow = Math.floor(Math.random() * values.farmRows)
+      let rainCol = Math.floor(Math.random() * values.farmCols)
 
       // updates the farm and adds to the rain timer count
       wateredFarm[rainRow][rainCol]++
@@ -67,6 +68,11 @@ export default function Home() {
   const resetFarm = () => {
     generateFarm()
     setCount(0)
+  }
+
+  const handleChanges = (e) => {
+    const { name, value } = e.target
+    setValues({ ...values, [name]: value })
   }
 
   return (
@@ -89,23 +95,25 @@ export default function Home() {
         <div className={styles.farmDimensions}>
           <label>
             Number of rows on farm
-            <input id='farmRows' name='farmRows' type='number' onChange={handleChanges} value={farmRows} />
+            <input id='farmRows' name='farmRows' type='number' onChange={handleChanges} value={values.farmRows} />
           </label>
           <label>
             Number of columns on farm
-            <input id='farmCols' name='farmCols' type='number' onChange={handleChanges} value={farmCols} />
+            <input id='farmCols' name='farmCols' type='number' onChange={handleChanges} value={values.farmCols} />
           </label>
         </div>
         <div className={styles.minimumWater}>
           <label>
             Minimum amount of rain per plant
-            <input name='waterLevel' type='number' onChange={handleChanges} value={waterLevel} />
+            <input name='waterLevel' type='number' onChange={handleChanges} value={values.waterLevel} />
           </label>
         </div>
 
-        <div>Time elapsed = {count}</div>
+        <div>
+          {farm?.length} x {farm[0]?.length} Farm | Time elapsed = {count}
+        </div>
         {/* display field */}
-        <Farm farm={farm} waterLevel={waterLevel} />
+        <Farm farm={farm} waterLevel={values.waterLevel} />
       </main>
 
       <footer className={styles.footer}>
