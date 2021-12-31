@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 
 import { useState, useEffect } from 'react'
+import useForm from '../hooks/useForm'
 
 import Button from '../components/Button'
 
@@ -9,10 +10,14 @@ import Farm from '../components/Farm'
 
 import styles from '../styles/Home.module.css'
 
+const initialValues = {
+  waterLevel: 1,
+  farmRows: 10,
+  farmCols: 10,
+}
+
 export default function Home() {
-  const [waterLevel, setWaterLevel] = useState(1)
-  const [farmRows, setFarmRows] = useState(10) // allows changes in farm rows
-  const [farmCols, setFarmCols] = useState(10) // allows changes in farm columns
+  const [{ waterLevel, farmRows, farmCols }, handleChanges, clearForm] = useForm(initialValues)
   const [farm, setFarm] = useState([])
   const [count, setCount] = useState(0)
   const [isRaining, setIsRaining] = useState({ row: -1, column: -1 })
@@ -27,7 +32,7 @@ export default function Home() {
 
   useEffect(() => {
     generateFarm()
-  }, [])
+  }, [waterLevel, farmRows, farmCols])
 
   const generateRain = (farm) => {
     let wateredFarm = farm
@@ -44,18 +49,21 @@ export default function Home() {
     }
 
     while (!checkWatered()) {
+      // generates a raindrop on a random plant
       let rainRow = Math.floor(Math.random() * farmRows)
       let rainCol = Math.floor(Math.random() * farmCols)
 
+      // updates the farm and adds to the rain timer count
       wateredFarm[rainRow][rainCol]++
       rainCount++
     }
 
-    // console.log(rainCount)
+    // updates the state
     setFarm(wateredFarm)
     setCount(rainCount)
   }
 
+  // rebuilds the farm
   const resetFarm = () => {
     generateFarm()
     setCount(0)
@@ -76,6 +84,23 @@ export default function Home() {
         <div className={styles.buttonBar}>
           <Button action={() => generateRain(farm)}>Generate Rain</Button>
           <Button action={() => resetFarm()}>Reset Farm</Button>
+        </div>
+
+        <div className={styles.farmDimensions}>
+          <label>
+            Number of rows on farm
+            <input id='farmRows' name='farmRows' type='number' onChange={handleChanges} value={farmRows} />
+          </label>
+          <label>
+            Number of columns on farm
+            <input id='farmCols' name='farmCols' type='number' onChange={handleChanges} value={farmCols} />
+          </label>
+        </div>
+        <div className={styles.minimumWater}>
+          <label>
+            Minimum amount of rain per plant
+            <input name='waterLevel' type='number' onChange={handleChanges} value={waterLevel} />
+          </label>
         </div>
 
         <div>Time elapsed = {count}</div>
