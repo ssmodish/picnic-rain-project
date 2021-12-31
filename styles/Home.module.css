@@ -10,11 +10,6 @@
   border-top: 1px solid black;
 }
 
-.buttonBar {
-  display: flex;
-  flex-direction: row;
-}
-
 .farmDimensions,
 .minimumWater {
   padding: 3px;

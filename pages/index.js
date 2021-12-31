@@ -17,7 +17,6 @@ const initialFarmState = {
 
 export default function Home() {
   const [farmState, setFarmState] = useState(initialFarmState)
-  const [isRaining, setIsRaining] = useState(false)
 
   const handleFarmChanges = (e) => {
     const { name, value } = e.target
@@ -35,11 +34,6 @@ export default function Home() {
       <main>
         <h1>Rain Problem</h1>
         <div className={styles.decoration}></div>
-
-        <div className={styles.buttonBar}>
-          <Button action={() => setIsRaining(true)}>Generate Rain</Button>
-          <Button action={() => setIsRaining(false)}>Reset Farm</Button>
-        </div>
 
         <div className={styles.farmDimensions}>
           <label>
@@ -64,7 +58,7 @@ export default function Home() {
         </div>
 
         {/* display farm */}
-        <Farm farmState={farmState} isRaining={isRaining} />
+        <Farm farmState={farmState} />
       </main>
 
       <footer className={styles.footer}>
