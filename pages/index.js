@@ -9,70 +9,19 @@ import Farm from '../components/Farm'
 
 import styles from '../styles/Home.module.css'
 
-const initialValues = {
-  waterLevel: 1,
-  farmRows: 10,
-  farmCols: 10,
+const initialFarmState = {
+  rows: '10',
+  cols: '10',
+  rainLevel: '1',
 }
 
 export default function Home() {
-  const [values, setValues] = useState(initialValues)
-  const [farm, setFarm] = useState([])
-  const [count, setCount] = useState(0)
-  const [isRaining, setIsRaining] = useState({ row: -1, column: -1 })
+  const [farmState, setFarmState] = useState(initialFarmState)
+  const [isRaining, setIsRaining] = useState(false)
 
-  const generateFarm = () => {
-    let newFarm = new Array(values.farmRows).fill(null).map(() =>
-      Array(values.farmCols)
-        .fill(null)
-        .map(() => 0)
-    )
-    setFarm(newFarm)
-  }
-
-  useEffect(() => {
-    generateFarm()
-  }, [])
-
-  const generateRain = (farm) => {
-    let wateredFarm = farm
-    let rainCount = count
-
-    const checkWatered = () => {
-      // waterLevel sets minimum rain amount
-      for (let row = 0; row < values.farmRows; row++) {
-        for (let col = 0; col < values.farmCols; col++) {
-          if (wateredFarm[row][col] < values.waterLevel) return false
-        }
-      }
-      return true
-    }
-
-    while (!checkWatered()) {
-      console.log(values.farmRows + ' - ' + values.farmCols)
-      // generates a raindrop on a random plant
-      let rainRow = Math.floor(Math.random() * values.farmRows)
-      let rainCol = Math.floor(Math.random() * values.farmCols)
-
-      // updates the farm and adds to the rain timer count
-      wateredFarm[rainRow][rainCol]++
-      rainCount++
-    }
-
-    // updates the state
-    setFarm(wateredFarm)
-    setCount(rainCount)
-  }
-
-  // rebuilds the farm
-  const resetFarm = () => {
-    generateFarm()
-    setCount(0)
-  }
-
-  const handleChanges = (e) => {
+  const handleFarmChanges = (e) => {
     const { name, value } = e.target
-    setValues({ ...values, [name]: value })
+    setFarmState({ ...farmState, [name]: value })
   }
 
   return (
@@ -88,32 +37,34 @@ export default function Home() {
         <div className={styles.decoration}></div>
 
         <div className={styles.buttonBar}>
-          <Button action={() => generateRain(farm)}>Generate Rain</Button>
-          <Button action={() => resetFarm()}>Reset Farm</Button>
+          <Button action={() => setIsRaining(true)}>Generate Rain</Button>
+          <Button action={() => setIsRaining(false)}>Reset Farm</Button>
         </div>
 
         <div className={styles.farmDimensions}>
           <label>
             Number of rows on farm
-            <input id='farmRows' name='farmRows' type='number' onChange={handleChanges} value={values.farmRows} />
+            <input id='rows' name='rows' type='number' onChange={handleFarmChanges} value={farmState.rows} />
           </label>
           <label>
             Number of columns on farm
-            <input id='farmCols' name='farmCols' type='number' onChange={handleChanges} value={values.farmCols} />
+            <input id='cols' name='cols' type='number' onChange={handleFarmChanges} value={farmState.cols} />
           </label>
         </div>
+
         <div className={styles.minimumWater}>
           <label>
             Minimum amount of rain per plant
-            <input name='waterLevel' type='number' onChange={handleChanges} value={values.waterLevel} />
+            <input name='rainLevel' type='number' onChange={handleFarmChanges} value={farmState.rainLevel} />
           </label>
         </div>
 
         <div>
-          {farm?.length} x {farm[0]?.length} Farm | Time elapsed = {count}
+          {farmState.rows} x {farmState.cols} Farm | Time elapsed =
         </div>
-        {/* display field */}
-        <Farm farm={farm} waterLevel={values.waterLevel} />
+
+        {/* display farm */}
+        <Farm farmState={farmState} isRaining={isRaining} />
       </main>
 
       <footer className={styles.footer}>

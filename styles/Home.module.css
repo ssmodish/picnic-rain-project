@@ -15,6 +15,12 @@
   flex-direction: row;
 }
 
+.farmDimensions,
+.minimumWater {
+  padding: 3px;
+  margin: 10px;
+}
+
 .footer {
   position: relative;
   bottom: 0vh;
